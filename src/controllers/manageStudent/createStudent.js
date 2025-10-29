@@ -2,26 +2,22 @@ import { Router } from "express";
 import StudentModel from "../../models/StudentModel.js";
 const router = Router();
 import { RESPONSE } from "../../config/global.js";
-import { send } from "../../helper/responseHelper.js";
+import { send, setErrMsg } from "../../helper/responseHelper.js";
 
 export default router.post("/", async (req, res) => {
   try {
     let { name, rollno, email } = req.body || {};
 
     if (!name || name == undefined) {
-      return res.send({
-        message: "name is undefined",
-      });
+      return send(res, setErrMsg(RESPONSE.REQUIRED, "name"));
     }
 
     if (!rollno || rollno == undefined) {
-      return send(res, RESPONSE.REQUIRED);
+      return send(res, setErrMsg(RESPONSE.REQUIRED, "rollno"));
     }
 
     if (!email || email == undefined) {
-      return res.send({
-        message: "email is undefined",
-      });
+      return send(res, setErrMsg(RESPONSE.REQUIRED, "email"));
     }
 
     let isEmail = email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);

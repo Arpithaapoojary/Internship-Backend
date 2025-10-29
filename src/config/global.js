@@ -10,6 +10,6 @@ export const RESPONSE = {
 
   REQUIRED: {
     code: 201,
-    message: "is response",
+    message: "is required",
   },
 };
