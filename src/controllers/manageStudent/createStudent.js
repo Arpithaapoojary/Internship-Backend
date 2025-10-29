@@ -1,6 +1,8 @@
 import { Router } from "express";
 import StudentModel from "../../models/StudentModel.js";
 const router = Router();
+import { RESPONSE } from "../../config/global.js";
+import { send } from "../../helper/responseHelper.js";
 
 export default router.post("/", async (req, res) => {
   try {
@@ -13,9 +15,7 @@ export default router.post("/", async (req, res) => {
     }
 
     if (!rollno || rollno == undefined) {
-      return res.send({
-        message: "rollno is undefined",
-      });
+      return send(res, RESPONSE.REQUIRED);
     }
 
     if (!email || email == undefined) {
@@ -48,9 +48,7 @@ export default router.post("/", async (req, res) => {
     //   email,
     // });
 
-    return res.send({
-      message: "Ok",
-    });
+    return res.send(RESPONSE.SUCCESS);
   } catch (error) {
     console.log("Err", error);
   }

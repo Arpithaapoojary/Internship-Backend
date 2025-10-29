@@ -7,4 +7,9 @@ export const RESPONSE = {
     code: 500,
     message: "Something went wrong",
   },
+
+  REQUIRED: {
+    code: 201,
+    message: "is response",
+  },
 };
