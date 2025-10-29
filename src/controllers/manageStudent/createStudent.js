@@ -33,6 +33,12 @@ export default router.post("/", async (req, res) => {
     }
 
     let studentRollno = await StudentModel.findOne({ rollno: rollno });
+
+    if (studentRollno) {
+      return res.send({
+        message: "rollno already existed",
+      });
+    }
     // console.log({ ...req.body });
     // console.log(name);
 
