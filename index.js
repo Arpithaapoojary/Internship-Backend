@@ -4,7 +4,8 @@ const app = express();
 import connectDB from "./src/helper/dbConnection.js";
 import router from "./routes.js";
 import dotenv from "dotenv";
-dotenv.config();
+
+dotenv.config({ quiet: true });
 
 app.use(express.json());
 
