@@ -12,4 +12,9 @@ export const RESPONSE = {
     code: 201,
     message: "is required",
   },
+
+  EXIST: {
+    code: 202,
+    message: "is already existed",
+  },
 };

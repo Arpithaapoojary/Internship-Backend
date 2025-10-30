@@ -23,26 +23,22 @@ export default router.post("/", async (req, res) => {
     let isEmail = email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
 
     if (!isEmail) {
-      return res.send({
-        message: "email is invalid",
-      });
+      return send(res, setErrMsg(RESPONSE.INVALID, "email"));
     }
 
     let studentRollno = await StudentModel.findOne({ rollno: rollno });
 
     if (studentRollno) {
-      return res.send({
-        message: "rollno already existed",
-      });
+      return send(res, setErrMsg(RESPONSE.EXIST, "rollno"));
     }
     // console.log({ ...req.body });
     // console.log(name);
 
-    // await StudentModel.create({
-    //   name,
-    //   rollno,
-    //   email,
-    // });
+    await StudentModel.create({
+      name,
+      rollno,
+      email,
+    });
 
     return res.send(RESPONSE.SUCCESS);
   } catch (error) {
