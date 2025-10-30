@@ -7,15 +7,30 @@ const router = Router();
 
 export default router.get("/", async (requestAnimationFrame, res) => {
   try {
-    let studentData = await StudentModel.find(
+    // let studentData = await StudentModel.find(
+    //   {
+    //     isactive: STATE.ACTIVE,
+    //   },
+    //   {
+    //     isactive: 0,
+    //     __v: 0,
+    //   }
+    // );
+
+    let studentData = await StudentModel.aggregate([
       {
-        isactive: STATE.ACTIVE,
+        $match: {
+          isactive: STATE.ACTIVE,
+        },
       },
+
       {
-        isactive: 0,
-        __v: 0,
-      }
-    );
+        $project: {
+          isactive: 0,
+          __v: 0,
+        },
+      },
+    ]);
 
     if (studentData.length == 0) {
       return send(res, setErrMsg(RESPONSE.NOT_FOUND, "students"));
