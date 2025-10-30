@@ -17,8 +17,8 @@ const studentSchema = mongoose.Schema({
 
   isactive: {
     type: Number,
-    defaultValue: 1,
+    default: 1,
   },
 });
 
-export default mongoose.model("students",studentSchema);
+export default mongoose.model("students", studentSchema);

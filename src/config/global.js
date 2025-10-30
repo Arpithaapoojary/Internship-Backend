@@ -13,6 +13,11 @@ export const RESPONSE = {
     message: "is required",
   },
 
+  NOT_FOUND: {
+    code: 204,
+    message: "not found",
+  },
+
   EXIST: {
     code: 202,
     message: "is already existed",
