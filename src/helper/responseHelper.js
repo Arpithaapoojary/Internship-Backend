@@ -1,8 +1,9 @@
-export const send = (res, response, data = {}) => {
+export const send = (res, response, data = {}, pageData = {}) => {
   return res.send({
     message: response.message,
     code: response.code,
     data: data,
+    pageData: pageData,
   });
 };
 

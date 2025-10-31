@@ -21,6 +21,7 @@ export default router.get("/", async (req, res) => {
     };
 
     student_id != undefined ? (query._id = student_id) : "";
+
     let studentData = await StudentModel.find(
       query,
 
@@ -51,7 +52,15 @@ export default router.get("/", async (req, res) => {
       return send(res, setErrMsg(RESPONSE.NOT_FOUND, "students"));
     }
 
-    return send(res, RESPONSE.SUCCESS, studentData);
+    let totalcount = await StudentModel.countDocuments(query);
+
+
+    
+    return send(res, RESPONSE.SUCCESS, studentData,{
+      totalcount:totalcount,
+      currentpage:page,
+      totalpage:Math.ceil(totalcount/limit)
+    });
   } catch (error) {
     console.log("List Student:", error);
   }
