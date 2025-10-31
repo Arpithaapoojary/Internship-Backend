@@ -9,6 +9,9 @@ export default router.get("/", async (req, res) => {
   try {
     let student_id = req.query.student_id;
 
+    let page = req.query.page ? Number(req.query.page) : 1;
+    let limit = req.query.limit ? Number(req.query.limit) : 2;
+
     let query = {
       isactive: STATE.ACTIVE,
       name: {
@@ -25,7 +28,9 @@ export default router.get("/", async (req, res) => {
         isactive: 0,
         __v: 0,
       }
-    );
+    )
+      .skip((page - 1) * limit)
+      .limit(limit);
 
     // let studentData = await StudentModel.aggregate([
     //   {
