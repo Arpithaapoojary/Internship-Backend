@@ -11,6 +11,10 @@ export default router.get("/", async (req, res) => {
 
     let query = {
       isactive: STATE.ACTIVE,
+      name: {
+        $regex: req.query.searchKey ?? "",
+        $options: "i",
+      },
     };
 
     student_id != undefined ? (query._id = student_id) : "";
