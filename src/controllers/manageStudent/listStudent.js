@@ -10,7 +10,7 @@ export default router.get("/", async (req, res) => {
     let student_id = req.query.student_id;
 
     let page = req.query.page ? Number(req.query.page) : 1;
-    let limit = req.query.limit ? Number(req.query.limit) : 2;
+    let limit = req.query.limit ? Number(req.query.limit) : 4;
 
     let query = {
       isactive: STATE.ACTIVE,
