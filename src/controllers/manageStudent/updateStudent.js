@@ -33,6 +33,11 @@ export default router.put("/", async (req, res) => {
     }
 
     if (email && email != undefined) {
+      let isEmail = email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
+
+      if (!isEmail) {
+        return send(res, setErrMsg(RESPONSE.INVALID, "email"));
+      }
       updates.email = email;
     }
     // await StudentModel.updateOne(
