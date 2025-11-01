@@ -18,6 +18,11 @@ export const RESPONSE = {
     message: "not found",
   },
 
+  INVALID: {
+    code: 205,
+    message: "invalid",
+  },
+
   EXIST: {
     code: 202,
     message: "is already existed",

@@ -38,6 +38,7 @@ export default router.put("/", async (req, res) => {
       if (!isEmail) {
         return send(res, setErrMsg(RESPONSE.INVALID, "email"));
       }
+
       updates.email = email;
     }
     // await StudentModel.updateOne(
