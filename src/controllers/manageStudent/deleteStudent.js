@@ -22,6 +22,11 @@ export default router.delete("/", async (req, res) => {
       return send(res, setErrMsg(RESPONSE.NOT_FOUND, "student_id"));
     }
 
+    //  await StudentModel.deleteOne(
+    //   {
+    //     _id: student_id,
+    //   });
+ 
     await StudentModel.updateOne(
       {
         _id: student_id,
