@@ -41,16 +41,16 @@ export default router.put("/", async (req, res) => {
 
       updates.email = email;
     }
-    // await StudentModel.updateOne(
-    //   {
-    //     _id: student_id,
-    //   },
-    //   {
-    //     $set: {
-    //       isactive: updates,
-    //     },
-    //   }
-    // );
+    await StudentModel.updateOne(
+      {
+        _id: student_id,
+      },
+      {
+        $set: {
+          isactive: updates,
+        },
+      }
+    );
 
     // console.log(updates);
 
