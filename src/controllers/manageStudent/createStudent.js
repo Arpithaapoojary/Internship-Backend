@@ -3,44 +3,55 @@ import StudentModel from "../../models/StudentModel.js";
 const router = Router();
 import { RESPONSE } from "../../config/global.js";
 import { send, setErrMsg } from "../../helper/responseHelper.js";
+import upload from "../../middlewares/uploads.js";
+import multer from "multer";
+const uploads = upload.single("image");
 
 export default router.post("/", async (req, res) => {
   try {
-    let { name, rollno, email } = req.body || {};
+    uploads(req, res, async (err) => {
+      if (err instanceof multer.MulterError) {
+        // A Multer error occurred when uploading.
+      } else if (err) {
+        // An unknown error occurred when uploading.
+      }
 
-    if (!name || name == undefined) {
-      return send(res, setErrMsg(RESPONSE.REQUIRED, "name"));
-    }
+      let { name, rollno, email } = req.body || {};
 
-    if (!rollno || rollno == undefined) {
-      return send(res, setErrMsg(RESPONSE.REQUIRED, "rollno"));
-    }
+      if (!name || name == undefined) {
+        return send(res, setErrMsg(RESPONSE.REQUIRED, "name"));
+      }
 
-    if (!email || email == undefined) {
-      return send(res, setErrMsg(RESPONSE.REQUIRED, "email"));
-    }
+      if (!rollno || rollno == undefined) {
+        return send(res, setErrMsg(RESPONSE.REQUIRED, "rollno"));
+      }
 
-    let isEmail = email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
+      if (!email || email == undefined) {
+        return send(res, setErrMsg(RESPONSE.REQUIRED, "email"));
+      }
 
-    if (!isEmail) {
-      return send(res, setErrMsg(RESPONSE.INVALID, "email"));
-    }
+      let isEmail = email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
 
-    let studentRollno = await StudentModel.findOne({ rollno: rollno });
+      if (!isEmail) {
+        return send(res, setErrMsg(RESPONSE.INVALID, "email"));
+      }
 
-    if (studentRollno) {
-      return send(res, setErrMsg(RESPONSE.EXIST, "rollno"));
-    }
-    // console.log({ ...req.body });
-    // console.log(name);
+      let studentRollno = await StudentModel.findOne({ rollno: rollno });
 
-    await StudentModel.create({
-      name,
-      rollno,
-      email,
+      if (studentRollno) {
+        return send(res, setErrMsg(RESPONSE.EXIST, "rollno"));
+      }
+      // console.log({ ...req.body });
+      // console.log(name);
+
+      // await StudentModel.create({
+      //   name,
+      //   rollno,
+      //   email,
+      // });
+
+      return res.send(RESPONSE.SUCCESS);
     });
-
-    return res.send(RESPONSE.SUCCESS);
   } catch (error) {
     console.log("Err", error);
   }
