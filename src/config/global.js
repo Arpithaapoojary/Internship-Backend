@@ -23,6 +23,11 @@ export const RESPONSE = {
     message: "invalid",
   },
 
+  MULTER_ERR: {
+    code: 265,
+    message: "",
+  },
+
   EXIST: {
     code: 202,
     message: "is already existed",

@@ -34,6 +34,8 @@ const fileFilter = (req, file, cb) => {
   // You can always pass an error if something goes wrong:
   cb(new Error("only png,jpg and jpeg file"));
 };
-const upload = multer({ storage: storage });
+
+let maxSize = 1024 * 1024 * 2;
+const upload = multer({ storage: storage, fileFilter: fileFilter });
 
 export default upload;

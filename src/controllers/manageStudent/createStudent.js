@@ -10,10 +10,8 @@ const uploads = upload.single("image");
 export default router.post("/", async (req, res) => {
   try {
     uploads(req, res, async (err) => {
-      if (err instanceof multer.MulterError) {
-        // A Multer error occurred when uploading.
-      } else if (err) {
-        // An unknown error occurred when uploading.
+      if (err) {
+        return send(res, setErrMsg(RESPONSE.MULTER_ERR, err));
       }
 
       let { name, rollno, email } = req.body || {};
