@@ -25,17 +25,22 @@ const fileFilter = (req, file, cb) => {
     file.mimetype.includes("image/png") ||
     file.mimetype.includes("image/jpeg") ||
     file.mimetype.includes("image/jpg")
-  )
+  ) {
+    cb(null, true);
+  } else {
+    // To accept the file pass `true`, like so:
     cb(null, false);
 
-  // To accept the file pass `true`, like so:
-  cb(null, true);
-
-  // You can always pass an error if something goes wrong:
-  cb(new Error("only png,jpg and jpeg file"));
+    // You can always pass an error if something goes wrong:
+    cb(new Error("only png,jpg and jpeg file"));
+  }
 };
 
 let maxSize = 1024 * 1024 * 2;
-const upload = multer({ storage: storage, fileFilter: fileFilter });
+const upload = multer({
+  storage: storage,
+  fileFilter: fileFilter,
+  limits: { fileSize: maxSize },
+});
 
 export default upload;
