@@ -15,6 +15,11 @@ const studentSchema = mongoose.Schema({
     required: true,
   },
 
+  image: {
+    type: String,
+    required: true,
+  },
+
   isactive: {
     type: Number,
     default: 1,
