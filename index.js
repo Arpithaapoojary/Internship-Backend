@@ -6,10 +6,15 @@ import router from "./routes.js";
 import dotenv from "dotenv";
 
 dotenv.config({ quiet: true });
+import path from "path";
+const _dirname = path.resolve();
+console.log(_dirname);
 
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
+
+app.use(express.static(path.join(_dirname, "public")));
 
 connectDB();
 router(app);

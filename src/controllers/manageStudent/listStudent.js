@@ -10,7 +10,7 @@ export default router.get("/", async (req, res) => {
     let student_id = req.query.student_id;
 
     let page = req.query.page ? Number(req.query.page) : 1;
-    let limit = req.query.limit ? Number(req.query.limit) : 4;
+    let limit = req.query.limit ? Number(req.query.limit) : 10;
 
     let query = {
       isactive: STATE.ACTIVE,
@@ -52,14 +52,19 @@ export default router.get("/", async (req, res) => {
       return send(res, setErrMsg(RESPONSE.NOT_FOUND, "students"));
     }
 
+    studentData = studentData.map((itm) => {
+      return {
+        ...itm.toJSON(),
+        image: itm.image ? "/uploads/" + itm.image : null,
+      };
+    });
+
     let totalcount = await StudentModel.countDocuments(query);
 
-
-    
-    return send(res, RESPONSE.SUCCESS, studentData,{
-      totalcount:totalcount,
-      currentpage:page,
-      totalpage:Math.ceil(totalcount/limit)
+    return send(res, RESPONSE.SUCCESS, studentData, {
+      totalcount: totalcount,
+      currentpage: page,
+      totalpage: Math.ceil(totalcount / limit),
     });
   } catch (error) {
     console.log("List Student:", error);

@@ -4,7 +4,7 @@ const router = Router();
 import { RESPONSE } from "../../config/global.js";
 import { send, setErrMsg } from "../../helper/responseHelper.js";
 import upload from "../../middlewares/uploads.js";
-import multer from "multer";
+// import multer from "multer";
 const uploads = upload.single("image");
 
 export default router.post("/", async (req, res) => {
@@ -14,7 +14,12 @@ export default router.post("/", async (req, res) => {
         return send(res, setErrMsg(RESPONSE.MULTER_ERR, err));
       }
 
+      if (!req.file || req.file == undefined) {
+        return send(res, setErrMsg(RESPONSE.REQUIRED, err));
+      }
+
       let { name, rollno, email } = req.body || {};
+      console.log(req.file.filename);
 
       if (!name || name == undefined) {
         return send(res, setErrMsg(RESPONSE.REQUIRED, "name"));
@@ -42,11 +47,12 @@ export default router.post("/", async (req, res) => {
       // console.log({ ...req.body });
       // console.log(name);
 
-      // await StudentModel.create({
-      //   name,
-      //   rollno,
-      //   email,
-      // });
+      await StudentModel.create({
+        name,
+        rollno,
+        email,
+        image: req.file.filename,
+      });
 
       return res.send(RESPONSE.SUCCESS);
     });
