@@ -26,6 +26,10 @@ export default router.put("/", async (req, res) => {
 
       let updates = {};
 
+      if (req.file && req.file.filename != undefined) {
+        updates.image = req.file.filename;
+      }
+
       if (name && name != undefined) {
         updates.name = name;
       }
@@ -55,9 +59,7 @@ export default router.put("/", async (req, res) => {
           _id: student_id,
         },
         {
-          $set: {
-            isactive: updates,
-          },
+          $set: updates,
         }
       );
 
