@@ -15,6 +15,10 @@ const studentSchema = mongoose.Schema({
     required: true,
   },
 
+  teacher_id: {
+    type: String,
+    required: true,
+  },
   image: {
     type: String,
     required: true,

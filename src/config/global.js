@@ -32,4 +32,9 @@ export const RESPONSE = {
     code: 202,
     message: "is already existed",
   },
+
+  ACCESS_DENIED: {
+    code: 211,
+    message: "access denied",
+  },
 };

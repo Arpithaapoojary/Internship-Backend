@@ -3,9 +3,10 @@ import StudentModel from "../../models/StudentModel.js";
 import { STATE } from "../../config/constant.js";
 import { RESPONSE } from "../../config/global.js";
 import { send, setErrMsg } from "../../helper/responseHelper.js";
+import authenticate from "../../middlewares/authenticate.js";
 const router = Router();
 
-export default router.get("/", async (req, res) => {
+export default router.get("/", authenticate, async (req, res) => {
   try {
     let student_id = req.query.student_id;
 
@@ -18,6 +19,7 @@ export default router.get("/", async (req, res) => {
         $regex: req.query.searchKey ?? "",
         $options: "i",
       },
+      teacher_id: req.token.id,
     };
 
     student_id != undefined ? (query._id = student_id) : "";

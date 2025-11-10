@@ -4,15 +4,18 @@ const router = Router();
 import { RESPONSE } from "../../config/global.js";
 import { send, setErrMsg } from "../../helper/responseHelper.js";
 import upload from "../../middlewares/uploads.js";
+import authenticate from "../../middlewares/authenticate.js";
 // import multer from "multer";
 const uploads = upload.single("image");
 
-export default router.post("/", async (req, res) => {
+export default router.post("/", authenticate, async (req, res) => {
   try {
     uploads(req, res, async (err) => {
       if (err) {
         return send(res, setErrMsg(RESPONSE.MULTER_ERR, err));
       }
+
+      // console.log(req.token);
 
       if (!req.file || req.file == undefined) {
         return send(res, setErrMsg(RESPONSE.REQUIRED, err));
@@ -52,6 +55,7 @@ export default router.post("/", async (req, res) => {
         rollno,
         email,
         image: req.file.filename,
+        teacher_id: req.token.id,
       });
 
       return res.send(RESPONSE.SUCCESS);
